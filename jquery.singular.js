@@ -20,8 +20,11 @@
 				nav: '.singular-nav',
 				prev: '.singular-prev',
 				next: '.singular-next',
-				scrollSpeed: 400,
+				navActiveClass: 'singular-active',
+				scrollSpeed: 1000,
 				easing: 'swing',
+				mousewheel: false,
+				scrollEnd: function() {}
 			};
 
 	function Plugin(element, options) {
@@ -44,28 +47,41 @@
 		self.currentSecNum = 0;
 		self.windowH = $(window).innerHeight();
 		self.sectionsLen = self.$sections.length;
+		self.moveFlg = false;
+		self.useNav = (self.$nav.length > 0) ? true : false;
+		self.usePrev = (self.$prev.length > 0) ? true : false;
+		self.useNext = (self.$next.length > 0) ? true : false;
 
 		self.$element.css('top', 0);
 
-		if(self.$nav.length) {
+		if(self.useNav) {
 			self.$nav.find('a').on('click keypress', function(e) {
 				e.preventDefault();
 				self.scrollSectionWithNav($(this));
 			});
 		}
-		if(self.$prev.length) {
+		if(self.usePrev) {
 			self.$prev.on('click keypress', function(e) {
 				e.preventDefault();
 				self.scrollSectionPrev();
 			});
 		}
-		if(self.$next.length) {
+		if(self.useNext) {
 			self.$next.on('click keypress', function(e) {
 				e.preventDefault();
 				self.scrollSectionNext();
 			});
 		}
+		if(self.settings.mousewheel) {
+			self.$element.on('mousewheel', function(e, delta) {
+				e.preventDefault();
+
+				if(delta < -0.8) self.scrollSectionNext();
+				if(delta > 0.8) self.scrollSectionPrev();
+			});
+		}
 		$(window).on('load scroll', function() {
+			self.changeNavActive(self.currentSecNum);
 			self.adjustSectionSize();
 		});
 	}
@@ -95,6 +111,7 @@
 		var self = this,
 				distance;
 
+		if(self.$element.is(':animated')) return false;
 		if(toNum < 0) toNum = 0;
 		if(toNum > self.sectionsLen - 1) toNum = self.sectionsLen - 1;
 		if(toNum == self.currentSecNum) return false;
@@ -108,7 +125,16 @@
 			top: distance
 		}, self.settings.scrollSpeed, self.settings.easing, function() {
 			self.currentSecNum = toNum;
+			self.changeNavActive(self.currentSecNum);
+			self.settings.scrollEnd(self);
 		});
+	}
+	Plugin.prototype.changeNavActive = function(num) {
+		var self = this,
+				$navChildren = self.$nav.children();
+
+		$navChildren.removeClass(self.settings.navActiveClass);
+		$navChildren.eq(num).addClass(self.settings.navActiveClass);
 	}
 
 	function adjustSectionSize($sections, windowH) {

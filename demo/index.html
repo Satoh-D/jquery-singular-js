@@ -5,67 +5,12 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <title>jQuery Singular.js</title>
-<style>
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-html, body {
-	height: 100%;
-	overflow: hidden;
-	width: 100%;
-}
-.mod-singular {
-	height: 100%;
-	left: 0;
-	position: fixed;
-	top: 0;
-	width: 100%;
-}
-.mod-singular-section {}
-.mod-singular-section:first-child {
-	color: rgba(255, 255, 255, 1.0);
-	background: rgba(0, 0, 0, 1.0);
-}
-.mod-singular-section:nth-child(2) {
-	color: rgba(255, 255, 255, 0.75);
-	background: rgba(0, 0, 0, 0.75);
-}
-.mod-singular-section:nth-child(3) {
-	color: rgba(255, 255, 255, 0.5);
-	background: rgba(0, 0, 0, 0.5);
-}
-.mod-singular-section:last-child {
-	color: rgba(255, 255, 255, 0.25);
-	background: rgba(0, 0, 0, 0.25);
-}
-.mod-singular-section > div {
-	height: 100%;
-	display: table;
-	width: 100%;
-}
-.mod-singular-section > div h1,
-.mod-singular-section > div h2 {
-	display: table-cell;
-	text-align: center;
-	vertical-align: middle;
-}
-.mod-nav {
-	left: 0;
-	position: fixed;
-	top: 20px;
-	width: 100%;
-}
-.mod-nav-list {
-	text-align: center;
-}
-.mod-nav-item {
-	display: inline-block;
-	margin: 0 10px;
-}
-</style>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Raleway:400,900'>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
+<script src="js/jquery.mousewheel.min.js"></script>
+<script src="js/jquery.easing.js"></script>
 <script src="../jquery.singular.js"></script>
 <script>
 $(function() {
@@ -73,7 +18,13 @@ $(function() {
 		section: '.mod-singular-section',
 		nav: '.js-singular-nav',
 		prev: '.js-singular-prev',
-		next: '.js-singular-next'
+		next: '.js-singular-next',
+		navActiveClass: 'js-singular-active',
+		scrollSpeed: 1000,
+		easing: 'easeInOutQuart',
+		scrollEnd: function(elem) {
+			console.log('scrollEnd');
+		}
 	});
 });
 </script>
@@ -82,20 +33,79 @@ $(function() {
 <div class="mod-page">
 
 <div class="mod-singular js-singular">
-<section id="sec01" class="mod-singular-section"><div><h1>jQuery Singular.js<br><a href="" class="js-singular-next">Next</a></h1></div></section>
-<section id="sec02" class="mod-singular-section"><div><h2>Page01<br><a href="" class="js-singular-prev">Prev</a> / <a href="" class="js-singular-next">Next</a></h2></div></section>
-<section id="sec03" class="mod-singular-section"><div><h2>Page02<br><a href="" class="js-singular-prev">Prev</a> / <a href="" class="js-singular-next">Next</a></h2></div></section>
-<section id="sec04" class="mod-singular-section"><div><h2>Page03<br><a href="" class="js-singular-prev">Prev</a></h2></div></section>
+
+<div id="sec01" class="mod-singular-section"><div class="mod-singular-section-in">
+<h1 class="mod-singular-ttl">jQuery Singular.js</h1>
+<p class="mod-singular-txt"><em>SingularJS</em>is a jQuery plugin to create SinglePage Website.</p>
+<p class="mod-singular-pager"><a href="" class="mod-singular-next js-singular-next"></a></p>
+<!-- /mod-singular-section --></div></div>
+
+<section id="sec02" class="mod-singular-section"><div class="mod-singular-section-in">
+<h2 class="mod-singular-ttl">How to use</h2>
+<p class="mod-singular-txt">HTML Markup is too easily.</p>
+<pre class="mod-singular-pre">
+&lt;div class="singular"&gt;
+&lt;section id="sec01" class="singular-section"&gt;&lt;/section&gt;
+&lt;section id="sec02" class="singular-section"&gt;&lt;/section&gt;
+&lt;section id="sec03" class="singular-section"&gt;&lt;/section&gt;
+&lt;section id="sec04" class="singular-section"&gt;&lt;/section&gt;
+&lt;/div&gt;
+<!-- /mod-singular-pre --></pre>
+<p class="mod-singular-pager"><a href="" class="mod-singular-prev js-singular-prev"></a><a href="" class="mod-singular-next js-singular-next"></a></p>
+<!-- /mod-singular-section --></div></section>
+
+<section id="sec03" class="mod-singular-section"><div class="mod-singular-section-in">
+<h2 class="mod-singular-ttl">Options</h2>
+
+<dl class="mod-singular-options">
+<dt class="mod-singular-options-name">[text] section</dt>
+<dd class="mod-singular-options-txt"> Section's classname.<br>(Default: '.singular-section')</dd>
+<dt class="mod-singular-options-name">[text] nav</dt>
+<dd class="mod-singular-options-txt">Nav's classname.<br>(Default: '.singular-nav')</dd>
+<dt class="mod-singular-options-name">[text] prev</dt>
+<dd class="mod-singular-options-txt">The classname that links to the previous section.<br>(Defualt: '.singular-prev')</dd>
+<dt class="mod-singular-options-name">[text] next</dt>
+<dd class="mod-singular-options-txt">The classname that links to the next section.<br>(Defualt: '.singular-next')</dd>
+<dt class="mod-singular-options-name">[text] navActiveClass</dt>
+<dd class="mod-singular-options-txt">The classname current section<br>(Default: singular-active)</dd>
+<dt class="mod-singular-options-name">[int] scrollSpeed</dt>
+<dd class="mod-singular-options-txt">scroll speed(ms)<br>(Default: 1000)</dd>
+<dt class="mod-singular-options-name">[text] easing</dt>
+<dd class="mod-singular-options-txt">Easing<br>(Default: 'swing')</dd>
+<dt class="mod-singular-options-name">[bool] mousewheel</dt>
+<dd class="mod-singular-options-txt">Scroll using the mouse wheel<br>(Default: false)</dd>
+<!-- /mod-singular-options --></dl>
+
+<p class="mod-singular-pager"><a href="" class="mod-singular-prev js-singular-prev"></a><a href="" class="mod-singular-next js-singular-next"></a></p>
+<!-- /mod-singular-section --></div></section>
+
+<section id="sec04" class="mod-singular-section"><div class="mod-singular-section-in">
+<h2 class="mod-singular-ttl">Brouser Support</h2>
+<p class="mod-singular-txt">IE8+</p>
+<p class="mod-singular-txt">Google Chrome(win/mac)</p>
+<p class="mod-singular-txt">Firefox(win/mac)</p>
+<p class="mod-singular-txt">Safari(mac)</p>
+<p class="mod-singular-pager"><a href="" class="mod-singular-prev js-singular-prev"></a><a href="" class="mod-singular-next js-singular-next"></a></p>
+<!-- /mod-singular-section --></div></section>
+
+<section id="sec05" class="mod-singular-section"><div class="mod-singular-section-in">
+<h2 class="mod-singular-ttl">License, Copyright</h2>
+<p class="mod-singular-txt">License: MIT License</p>
+<p class="mod-singular-txt">Copyright: ©Sato Daiki. (<a href="http://orememo-v2.tumblr.com/" target="_blank">http://orememo-v2.tumblr.com</a>)</p>
+<p class="mod-singular-pager"><a href="" class="mod-singular-prev js-singular-prev"></a></p>
+<!-- /mod-singular-section --></div></section>
+
 <!-- /mod-singular --></div>
 
-<nav class="mod-nav">
+<div class="mod-nav">
 <ul class="mod-nav-list js-singular-nav">
 <li class="mod-nav-item"><a href="#sec01">HOME</a></li>
-<li class="mod-nav-item"><a href="#sec02">Page01</a></li>
-<li class="mod-nav-item"><a href="#sec03">Page02</a></li>
-<li class="mod-nav-item"><a href="#sec04">Page03</a></li>
+<li class="mod-nav-item"><a href="#sec02">How to use</a></li>
+<li class="mod-nav-item"><a href="#sec03">Options</a></li>
+<li class="mod-nav-item"><a href="#sec04">Browser Support</a></li>
+<li class="mod-nav-item"><a href="#sec05">License, Copyright</a></li>
 </ul>
-<!-- /mod-nav --></nav>
+<!-- /mod-nav --></div>
 
 <!-- /mod-page --></div>
 </body>
