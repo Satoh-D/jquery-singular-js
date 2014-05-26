@@ -43,7 +43,7 @@ $(function() {
 - `easing`[text]: Easing name. (Require [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/))
 - `mousewheel`[bool]: Scroll using th mouse wheel. (Require [jQuery Mouse Wheel Plugin](https://github.com/brandonaaron/jquery-mousewheel))
 
-## Brouser Support
+## Browser Support
 
 - IE8+
 - Google Chrome (win/mac)
