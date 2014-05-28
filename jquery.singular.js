@@ -8,7 +8,7 @@
  * @copyright   2014 Sato Daiki.
  * @author      Daiki Sato <sato.dik@gmail.com>
  * @link        http://orememo-v2.tumblr.com
- * @version     1.0
+ * @version     1.0.3
  * @since       2014.05.20
  */
 
@@ -24,6 +24,7 @@
 				scrollSpeed: 1000,
 				easing: 'swing',
 				mousewheel: false,
+				scrollStart: function() {},
 				scrollEnd: function() {}
 			};
 
@@ -123,6 +124,8 @@
 		if(self.currentSecNum < toNum) distance = -distance;
 
 		distance = parseInt(self.$element.css('top'), 10) + (self.windowH * distance);
+
+		self.settings.scrollStart(self, toNum);
 
 		self.$element.stop().animate({
 			top: distance
