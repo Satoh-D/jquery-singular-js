@@ -84,6 +84,9 @@
 			self.changeNavActive(self.currentSecNum);
 			self.adjustSectionSize();
 		});
+		$(window).on('resize', function() {
+			self.adjustSectionSize();
+		});
 	}
 	Plugin.prototype.adjustSectionSize = function() {
 		var self = this;
