@@ -139,8 +139,12 @@
 		var self = this,
 				$navChildren = self.$nav.children();
 
-		$navChildren.removeClass(self.settings.navActiveClass);
-		$navChildren.eq(num).addClass(self.settings.navActiveClass);
+		self.$nav.each(function() {
+			var $navChildren = $(this).children();
+
+			$navChildren.removeClass(self.settings.navActiveClass);
+			$navChildren.eq(num).addClass(self.settings.navActiveClass);
+		});
 	}
 
 	function adjustSectionSize($sections, windowH) {
